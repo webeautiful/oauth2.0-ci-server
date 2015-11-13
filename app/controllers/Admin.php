@@ -9,13 +9,13 @@ class Admin extends MY_Controller{
         $server = $this->getOAuth2();
         $storage = $server->getStorage('client');
 
-        $client_id = 'testclient';
-        $client_secret = 'testpass';
-        $redirect_uri = 'http://t.pigai.org/pigai_sdk/';
-        $grant_types = 'client_credentials authorization_code';//client_credentials authorization_code password
-        $scope = 'users_basic_r';
-        $scope = $storage->getDefaultScope().' '.$scope;
-        $user_id = 1;
+        $client_id = 'demoapp';
+        $client_secret = 'demopass';
+        $redirect_uri = 'http://ci-oauth2.pigai.org/';
+        $grant_types = null;//client_credentials authorization_code password
+        $scope = null;
+        //$scope = $storage->getDefaultScope().' '.$scope;
+        $user_id = 2;
         $bool = $storage->setClientDetails($client_id, $client_secret, $redirect_uri, $grant_types, $scope, $user_id);
         var_dump($bool);
     }
@@ -34,8 +34,8 @@ class Admin extends MY_Controller{
         $server = $this->getOAuth2();
         $storage = $server->getStorage('client');
 
-        $username = '121023254@qq.com';
-        $password = 'xiongfusong';
+        $username = 'demouser';
+        $password = 'testpass';
         $firstName = null;
         $lastName = null;
         $bool = $storage->setUser($username, $password, $firstName = null, $lastName = null);

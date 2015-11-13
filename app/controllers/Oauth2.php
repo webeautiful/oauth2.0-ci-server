@@ -7,6 +7,7 @@ class Oauth2 extends MY_Controller {
         $request = OAuth2\Request::createFromGlobals();
         $response = new OAuth2\Response();
 
+        //echo $this->input->get('redirect_uri');exit;
         // validate the authorize request
         if (!$server->validateAuthorizeRequest($request, $response)) {
             $response->send();
@@ -25,10 +26,11 @@ class Oauth2 extends MY_Controller {
                 // this is only here so that you get to see your code in the cURL request. Otherwise, we'd redirect back to the client
                 switch($_GET['response_type']) {
                     case 'token':
-                        parse_str($parseUrl['fragment'], $param);
+                        //parse_str($parseUrl['fragment'], $param);
+                        $response->send();
                         break;
                     case 'code':
-                        parse_str($parseUrl['query'], $param);
+                        //parse_str($parseUrl['query'], $param);
                         $response->send();
                         break;
                     default:
@@ -39,12 +41,9 @@ class Oauth2 extends MY_Controller {
                 header("Content-type: application/json");
                 exit(json_encode($param));
             }
-            $return = array(
-                'code'=>'ZMDSF13DMDA',
-                'state'=> ''
-            );
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode($return);
+            //cancel authorization
+            $response->send();
+
         }
     }
 

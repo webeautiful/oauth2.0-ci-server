@@ -15,10 +15,10 @@ class Users extends MY_Controller {
             case 'POST':
             case 'PUT':
             case 'DELETE':
-                $scopeRequired = 'users_basic_w';
+                $scopeRequired = '';
                 break;
             default:
-                $scopeRequired = 'users_basic_r';
+                $scopeRequired = '';
                 break;
         }
 
@@ -41,9 +41,11 @@ class Users extends MY_Controller {
         }
     }
     //获取用户信息
-    function show()
+    function friends()
     {
         //print_r($server->getAccessTokenData($request));//token data
-        echo json_encode(array('success' => true, 'message' => 'You accessed my APIs!'));
+        header('Content-Type: application/json; charset=utf-8');
+        $friends = array('friends'=>array('John', 'Matt', 'Jane'));
+        echo json_encode($friends);
     }
 }

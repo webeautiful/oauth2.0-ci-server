@@ -28,7 +28,8 @@ class MY_Controller extends CI_Controller
         $server = new OAuth2\Server($storage);
         $config = array(
             'allow_implicit' => true,
-            'access_lifetime' => 7200
+            'access_lifetime' => 7200,
+            'require_exact_redirect_uri' => false
         );
         foreach($config as $n=>$v){
             $server->setConfig($n, $v);
