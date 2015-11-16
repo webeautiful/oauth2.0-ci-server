@@ -20,6 +20,15 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
+        $this->load->library('MY_Curl', '', 'curl');
+        $data = array(
+            'id' => '1',
+            'content' => 'Hello world!',
+            'date' => date('Y-m-d H:i:s'),
+        );
+        $this->curl->post('https://httpbin.org/post', $data);
+        $res = $this->curl->response->form;
+        var_dump($res->content);
 		$this->load->view('welcome_message');
 	}
 }

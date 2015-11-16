@@ -43,7 +43,6 @@ class Oauth2 extends MY_Controller {
             }
             //cancel authorization
             $response->send();
-
         }
     }
 

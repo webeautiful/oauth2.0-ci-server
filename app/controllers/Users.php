@@ -39,6 +39,7 @@ class Users extends MY_Controller {
             $response->send();
             die;
         }
+        $this->load->library('MY_Curl', '', 'curl');
     }
     //获取用户信息
     function friends()
