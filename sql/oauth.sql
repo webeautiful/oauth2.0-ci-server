@@ -85,3 +85,13 @@ CREATE TABLE `oauth_users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 1.oauth_users表创建一个username为demouser,password为testpass(经过sha1加密)的用户
+--
+INSERT INTO `oauth_users` (`username`, `password`) VALUES ('demouser', '206c80413b9a96c1312cc346b7d2517b84463edd');
+
+--
+-- 2.oauth_clients表创建一个与oauth_users表通过user_id关联的应用
+--
+INSERT INTO `oauth_clients` VALUES ('demoapp1', 'demopass1', 'http://ci-oauth2.pigai.org/', NULL, NULL, 3);
