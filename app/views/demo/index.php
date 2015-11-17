@@ -64,12 +64,12 @@
                 </ul>
                 <p>Make the following cURL request to receive an access token:</p>
                 <pre>
-                    <code>  $ curl -v "http://brentertainment.com/oauth2/lockdin/token" \
+                    <code>  $ curl "http://ci-oauth2.pigai.org/oauth2/access_token" \
                         -d "grant_type=password&client_id=demoapp&client_secret=demopass&username=demouser&password=testpass"
                     </code>
                 </pre>
                 <p>...or just click below to let us do it for you<p>
-                <a class="button" href="./oauth2/client/request_token/user_credentials?username=demouser&password=testpass">Get Access Token</a>
+                <a class="button" href="/client/request_token?grant_type=password">Get Access Token</a>
             </div>
             <div class="simpleTabsContent">
                 <p>

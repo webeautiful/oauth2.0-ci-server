@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Client extends CI_Controller{
+    const auth_uri = 'http://ci-oauth2.pigai.org/';
+    const resource_uri = 'http://ci-oauth2.pigai.org/';
+
     function index()
     {
         $redirect_uri = urlencode('http://ci-oauth2.pigai.org/');//最后的反斜杠必不可少
@@ -39,7 +42,17 @@ class Client extends CI_Controller{
             case 'client_credentials':
                 $token = $this->getValidAccessToken();
                 break;
-            case 'user_credentials':
+            case 'password'://user_credentials
+                $this->load->library('MY_Curl', '', 'curl');
+                $data = array(
+                    'grant_type'=>'password',
+                    'client_id'=>'demoapp',
+                    'client_secret'=>'demopass',
+                    'username'=>'demouser',
+                    'password'=>'testpass'
+                );
+                $this->curl->post(self::auth_uri.'/oauth2/access_token', $data);
+                $token = $this->curl->response;
                 break;
             case 'refresh_token':
                 break;
@@ -62,7 +75,7 @@ class Client extends CI_Controller{
     function request_resource()
     {
         $access_token = $this->input->get('token');
-        $resource_api = 'http://ci-oauth2.pigai.org/users/friends?access_token='.$access_token;
+        $resource_api = self::resource_uri.'users/friends?access_token='.$access_token;
         $res = $this->curl_getApi($resource_api);
 
         $data = compact('res', 'resource_api');
@@ -165,7 +178,7 @@ class Client extends CI_Controller{
             $diff = time()-$arr[0]+15;
             if($diff > $arr[2]){
                 //更新access_token
-                $accessToken = updateAccessToken($filename);
+                $accessToken = $this->updateAccessToken($filename);
                 //echo "token已过期，已重新更新\n";
             }else{
                 $accessToken = (object)array(

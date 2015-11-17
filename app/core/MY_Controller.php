@@ -40,6 +40,10 @@ class MY_Controller extends CI_Controller
 
         // Add the "Authorization Code" grant type (this is where the oauth magic happens)
         $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
+
+        // Add the "User Credentials" grant type
+        $server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));
+
         $this->OAuth2 = $server;
     }
     function getOAuth2()

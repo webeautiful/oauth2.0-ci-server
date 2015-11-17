@@ -13,6 +13,48 @@ class Oauth2 extends MY_Controller {
             $response->send();
             die;
         }
+        $responseType = isset($_GET['response_type']) ? $_GET['response_type'] : 'code';
+        if($responseType === 'token'){
+            $server->handleAuthorizeRequest($request, $response, true);
+            $response->send();
+        }
+        // display an authorization form
+        if (empty($_POST)) {
+            $this->load->view('oauth2_authorize.html');
+        }else{
+            // print the authorization code if the user has authorized your client
+            $is_authorized = ($_POST['authorized'] === '连接');
+            $server->handleAuthorizeRequest($request, $response, $is_authorized);
+            if ($is_authorized) {
+                // this is only here so that you get to see your code in the cURL request. Otherwise, we'd redirect back to the client
+                switch($_GET['response_type']) {
+                    case 'token':
+                        $response->send();
+                        break;
+                    case 'code':
+                        $response->send();
+                        break;
+                    default:
+                        exit('error');
+                        break;
+                }
+            }
+            //cancel authorization
+            $response->send();
+        }
+    }
+    function authorize2()
+    {
+        $server = $this->getOAuth2();
+        $request = OAuth2\Request::createFromGlobals();
+        $response = new OAuth2\Response();
+
+        //echo $this->input->get('redirect_uri');exit;
+        // validate the authorize request
+        if (!$server->validateAuthorizeRequest($request, $response)) {
+            $response->send();
+            die;
+        }
         // display an authorization form
         if (empty($_POST)) {
             $this->load->view('oauth2_authorize.html');
