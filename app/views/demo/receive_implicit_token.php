@@ -24,7 +24,7 @@
 
         <div id="request_resource" style="display:none">
             <p>Now use this token to make a request to the OAuth2.0 Server's APIs:</p>
-            <a class="button" href="/client/request_resource" onclick="this.href += '?token='+(getAccessToken()).access_token;">make a resource request</a>
+            <a class="button" href="<?php echo API_URI;?>client/request_resource" onclick="this.href += '?token='+(getAccessToken()).access_token;">make a resource request</a>
             <div class="help"><em>This token can now be used multiple times to make API requests for this user.</em></div>
         </div>
         <a href="/client/">back</a>

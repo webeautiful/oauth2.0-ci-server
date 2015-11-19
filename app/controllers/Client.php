@@ -1,9 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Client extends CI_Controller{
-    const auth_uri = 'http://ci-oauth2.pigai.org/';
-    const resource_uri = 'http://ci-oauth2.pigai.org/';
-
+    const client_id = 'demoapp';
+    const client_secret = 'demopass';
     function index()
     {
         $redirect_uri = urlencode('http://ci-oauth2.pigai.org/');//最后的反斜杠必不可少
@@ -40,7 +39,8 @@ class Client extends CI_Controller{
                 $token = $this->getValidAccessTokenByCode($code, $redirect_uri);
                 break;
             case 'client_credentials':
-                $token = $this->getValidAccessToken();
+                $access_token = $this->get_token_by_client();
+                $token = (object)array('access_token'=>$access_token, 'expires_in'=>7200);
                 break;
             case 'password'://user_credentials
                 $this->load->library('MY_Curl', '', 'curl');
@@ -51,7 +51,7 @@ class Client extends CI_Controller{
                     'username'=>'demouser',
                     'password'=>'testpass'
                 );
-                $this->curl->post(self::auth_uri.'/oauth2/access_token', $data);
+                $this->curl->post(API_URI.'oauth2/access_token', $data);
                 $token = $this->curl->response;
                 break;
             case 'refresh_token':
@@ -75,13 +75,43 @@ class Client extends CI_Controller{
     function request_resource()
     {
         $access_token = $this->input->get('token');
-        $resource_api = self::resource_uri.'users/friends?access_token='.$access_token;
+        $resource_api = API_URI.'users/friends?access_token='.$access_token;
         $res = $this->curl_getApi($resource_api);
 
         $data = compact('res', 'resource_api');
         $this->load->view('demo/header.html');
         $this->load->view('demo/request_resource', $data);
         $this->load->view('demo/footer.html');
+    }
+    //client_credentials方式获取token
+    function demo_all_json()
+    {
+        $access_token = $this->get_token_by_client();
+        $data = compact('access_token');
+        $this->load->view('demo_all_json', $data);
+    }
+    private function get_token_by_client()
+    {
+        if(0){
+            $token = $this->getValidAccessToken();
+            $access_token = $token->access_token;
+        }else{
+            //cache token
+            $this->load->driver('cache');
+            if ( ! $access_token = $this->cache->file->get('access_token'))
+            {
+                $this->load->library('MY_Curl', '', 'curl');
+                $this->curl->setBasicAuthentication(self::client_id, self::client_secret);
+                $data = array(
+                    'grant_type'=>'client_credentials'
+                );
+                $this->curl->post(API_URI.'oauth2/access_token', $data);
+                $token = $this->curl->response;
+
+                $this->cache->file->save('access_token', $token->access_token, $token->expires_in-60);
+            }
+        }
+        return $access_token;
     }
 
     //-----------curl获取access_token----------------//
@@ -228,7 +258,7 @@ class Client extends CI_Controller{
         //获取access_token
         //$api = 'http://oauth2.pigai.org/token.php?grant_type=client_credential';
         //$api = 'http://oauth2.pigai.org/token.php';
-        $api = 'http://ci-oauth2.pigai.org/oauth2/access_token';
+        $api = API_URI.'oauth2/access_token';
         $param = 'grant_type=client_credentials';
         $httpAuth = array(
             'username'=>'demoapp',

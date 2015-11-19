@@ -1,10 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Cache_Memcached extends CI_Controller{
-    function index()
+    function __construct()
     {
+        parent::__construct();
         $this->load->driver('cache');
-
+    }
+    function test()
+    {
         if ( ! $foo = $this->cache->memcached->get('foo'))
         {
             echo 'Saving to the cache!<br />';
@@ -15,5 +18,10 @@ class Cache_Memcached extends CI_Controller{
         }
 
         echo $foo;
+    }
+    function statistics()
+    {
+        $client_id = $this->input->get('client_id');
+        $client_id = $client_id? trim($client_id) : '';
     }
 }

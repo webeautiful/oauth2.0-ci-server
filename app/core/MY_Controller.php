@@ -50,4 +50,24 @@ class MY_Controller extends CI_Controller
     {
         return $this->OAuth2;
     }
+    function verifyResourceRequest($request, $response = null, $scopeRequired = null)
+    {
+        $server = $this->OAuth2;
+
+        // Handle a request to a resource and authenticate the access token
+        if (!$server->verifyResourceRequest($request, $response, $scopeRequired)) {
+            $response = $server->getResponse();
+            $params = $response->getParameters();
+            if($params){
+                $response->send();
+            }else{
+                $params = array(
+                    'error'=> 'parameter error',
+                    'error_description'=> 'The parameters not error!'
+                );
+                $response->setParameters($params);
+                $response->send();
+            }
+        }
+    }
 }

@@ -18,7 +18,7 @@
                 <p>
                     The <code>Authorization Code</code> grant type is the most common workflow for OAuth2.0.  Clicking the "Authorize" button below will send you to an OAuth2.0 Server to authorize:
                 </p>
-                <a class="button" href="/oauth2/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
+                <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
             </div>
             <div class="simpleTabsContent">
                 <p>
@@ -27,7 +27,7 @@
                     request to the OAuth2.0 Server. Clicking the "Authorize" button below will send you to an
                     OAuth2.0 Server to authorize:
                 </p>
-                <a class="button" href="./oauth2/authorize?response_type=token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_implicit_token&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
+                <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_implicit_token&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
             </div>
             <div class="simpleTabsContent">
                 <p>
@@ -75,7 +75,7 @@
                 <p>
                     The <code>Refresh Token</code> grant type is typically used in tandem with the <code>Authorization Code</code> grant type. Click the "Authorize" button to receive an authorization code:
                 </p>
-                <a class="button" href="./oauth2/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode%3Fshow_refresh_token%3D1&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
+                <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode%3Fshow_refresh_token%3D1&state=55e68dcf03648f51ea555c8383bf58ce">Authorize</a>
             </div>
             <div class="simpleTabsContent">
                 <p>
@@ -83,21 +83,21 @@
                 </p>
 
                 <p>
-                    <a class="button" href="http://brentertainment.com/oauth2/lockdin/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=942163358">Authorization Code</a>
+                    <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=code&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=942163358">Authorization Code</a>
                     <div class="help">
                         Uses the Authorization Code Grant and adds the "openid" scope parameter. An ID Token comes back with the Access Token
                     </div>
                 </p>
 
                 <p>
-                    <a class="button" href="http://brentertainment.com/oauth2/lockdin/authorize?response_type=code%20id_token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=71361434">Authorization Code + ID Token</a>
+                    <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=code%20id_token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_authcode&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=71361434">Authorization Code + ID Token</a>
                     <div class="help">
                         Same as above, but with the "code id_token" response type. The ID Token comes back with the Authorization Code.
                     </div>
                 </p>
 
                 <p>
-                    <a class="button" href="http://brentertainment.com/oauth2/lockdin/authorize?response_type=token%20id_token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_implicit_token&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=125950800">Implicit</a>
+                    <a class="button" href="<?php echo API_URI;?>oauth2/authorize?response_type=token%20id_token&client_id=demoapp&redirect_uri=<?php echo $redirect_uri;?>client%2Freceive_implicit_token&scope=openid&state=55e68dcf03648f51ea555c8383bf58ce&nonce=125950800">Implicit</a>
                     <div class="help">
                         Uses the implicit grant type, but the Access Token also returns with an ID Token.
                     </div>
