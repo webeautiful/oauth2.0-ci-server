@@ -63,11 +63,12 @@ class MY_Controller extends CI_Controller
             }else{
                 $params = array(
                     'error'=> 'parameter error',
-                    'error_description'=> 'The parameters not error!'
+                    'error_description'=> 'The parameters not correct!'
                 );
                 $response->setParameters($params);
                 $response->send();
             }
+            die;
         }
     }
 }
